@@ -1,7 +1,12 @@
 /*
  * Corne Keymap - ZMK
- * Configuração: Symmetrical Dev (macOS) v2
- * Alterações: ESC físico na direita, Swap Space/Enter nos thumbs
+ * Configuração: Symmetrical Dev v4 (Final)
+ * Features:
+ * - Home Row Mods (Segure para Ctrl/Alt/Cmd/Shift)
+ * - Símbolos Simétricos (Esq abre, Dir fecha)
+ * - F-Keys e Mídia na Layer Adjust
+ * - Combo para Print Screen (Z+X) e Gravação (X+C)
+ * - Thumbs: Space (Esq), Enter (Dir)
  */
 
 #include <behaviors.dtsi>
@@ -17,7 +22,6 @@
 / {
     /* --- 1. COMPORTAMENTOS (Behaviors) --- */
     behaviors {
-        /* Home Row Mods */
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS";
@@ -31,7 +35,6 @@
 
     /* --- 2. MACROS --- */
     macros {
-        /* Cmd + Shift + 4 (Captura de Área) */
         print_region: print_region {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -41,7 +44,6 @@
                 , <&macro_release &kp LGUI &kp LSHFT>;
         };
 
-        /* Cmd + Shift + 5 (Gravação de Tela) */
         video_record: video_record {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -51,7 +53,6 @@
                 , <&macro_release &kp LGUI &kp LSHFT>;
         };
 
-        /* Arrow Function JS (=>) */
         arrow_js: arrow_js {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -63,21 +64,18 @@
     combos {
         compatible = "zmk,combos";
 
-        /* Z + X = Print Screen */
         combo_print {
             timeout-ms = <50>;
             key-positions = <25 26>;
             bindings = <&print_region>;
         };
 
-        /* X + C = Gravar Video */
         combo_video {
             timeout-ms = <50>;
             key-positions = <26 27>;
             bindings = <&video_record>;
         };
 
-        /* J + K = ESC (Opção alternativa ao ESC físico) */
         combo_esc {
             timeout-ms = <50>;
             key-positions = <19 20>;
@@ -99,18 +97,18 @@
         compatible = "zmk,keymap";
 
         /* * LAYER 0: DEFAULT
-         * Alterações: ESC na ponta direita, Space/Enter invertidos nos thumbs
+         * Thumbs: Space (Esq) / Enter (Dir)
          */
         default_layer {
             bindings = <
    &kp TAB   &kp Q       &kp W       &kp E       &kp R       &kp T         &kp Y       &kp U       &kp I       &kp O       &kp P          &kp BSPC
    &kp LCTRL &hm LCTRL A &hm LALT S  &hm LGUI D  &hm LSHFT F &kp G         &kp H       &hm RSHFT J &hm RGUI K  &hm RALT L  &hm RCTRL SEMI &kp SQT
    &kp LSHFT &kp Z       &kp X       &kp C       &kp V       &kp B         &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH       &kp ESC
-                                     &kp LGUI    &mo LOWER   &kp RET       &kp SPACE   &mo RAISE   &kp RALT
+                                     &kp LGUI    &mo LOWER   &kp SPACE     &kp RET     &mo RAISE   &kp RALT
             >;
         };
 
-        /* * LAYER 1: LOWER (Números e Navegação) */
+        /* * LAYER 1: LOWER (Números/Nav) */
         lower_layer {
             bindings = <
    &kp ESC    &kp N1      &kp N2      &kp N3      &kp N4      &kp N5        &kp N6      &kp N7      &kp N8      &kp N9      &kp N0         &kp DEL
@@ -120,7 +118,7 @@
             >;
         };
 
-        /* * LAYER 2: RAISE (Símbolos Simétricos) */
+        /* * LAYER 2: RAISE (Símbolos) */
         raise_layer {
             bindings = <
    &kp GRAVE  &kp EXCL    &kp AT      &kp HASH    &kp LBRC    &kp LPAR      &kp RPAR    &kp RBRC    &kp AMPS    &kp ASTRK   &kp CARET      &kp BSPC
@@ -130,13 +128,15 @@
             >;
         };
 
-        /* * LAYER 3: ADJUST (Sistema) */
+        /* * LAYER 3: ADJUST (F-Keys + Media + System)
+         * Acessado via LOWER + RAISE
+         */
         adjust_layer {
             bindings = <
-   &bootloader  &sys_reset  &trans      &trans      &trans      &trans        &trans      &trans      &trans      &trans      &sys_reset     &bootloader
-   &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4  &trans      &trans      &trans      &trans      &trans         &trans
-   &trans       &trans      &trans      &trans      &trans      &trans        &trans      &trans      &trans      &trans      &trans         &trans
-                                        &trans      &trans      &trans        &trans      &trans      &trans
+   &kp F1       &kp F2       &kp F3       &kp F4       &kp F5       &kp F6        &kp F7      &kp F8      &kp F9      &kp F10     &kp F11        &kp F12
+   &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4  &kp C_MUTE  &kp C_VOL_DN &kp C_VOL_UP &kp C_BRI_DN &kp C_BRI_UP  &kp C_PP
+   &bootloader  &sys_reset   &trans       &trans       &trans       &trans        &trans      &trans      &trans      &trans      &sys_reset     &bootloader
+                                          &trans       &trans       &trans        &trans      &trans      &trans
             >;
         };
     };
