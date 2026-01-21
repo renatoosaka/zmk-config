@@ -1,6 +1,7 @@
 /*
  * Corne Keymap - ZMK
- * Configuração: Symmetrical Dev (macOS)
+ * Configuração: Symmetrical Dev (macOS) v2
+ * Alterações: ESC físico na direita, Swap Space/Enter nos thumbs
  */
 
 #include <behaviors.dtsi>
@@ -16,10 +17,7 @@
 / {
     /* --- 1. COMPORTAMENTOS (Behaviors) --- */
     behaviors {
-        /* * Home Row Mods:
-         * Toque rápido = tecla normal
-         * Segurar = modificador (Ctrl, Alt, Cmd, Shift)
-         */
+        /* Home Row Mods */
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS";
@@ -65,7 +63,7 @@
     combos {
         compatible = "zmk,combos";
 
-        /* Z + X = Print Screen (Area) */
+        /* Z + X = Print Screen */
         combo_print {
             timeout-ms = <50>;
             key-positions = <25 26>;
@@ -79,7 +77,7 @@
             bindings = <&video_record>;
         };
 
-        /* J + K = ESC (Saída rápida) */
+        /* J + K = ESC (Opção alternativa ao ESC físico) */
         combo_esc {
             timeout-ms = <50>;
             key-positions = <19 20>;
@@ -88,7 +86,6 @@
     };
 
     /* --- 4. CONDITIONAL LAYERS --- */
-    /* Ativa a layer ADJ (3) automaticamente ao segurar LOWER + RAISE */
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
@@ -102,31 +99,28 @@
         compatible = "zmk,keymap";
 
         /* * LAYER 0: DEFAULT
-         * Modificadores: A(Ctrl), S(Alt), D(Cmd/Gui), F(Shift)
+         * Alterações: ESC na ponta direita, Space/Enter invertidos nos thumbs
          */
         default_layer {
             bindings = <
    &kp TAB   &kp Q       &kp W       &kp E       &kp R       &kp T         &kp Y       &kp U       &kp I       &kp O       &kp P          &kp BSPC
    &kp LCTRL &hm LCTRL A &hm LALT S  &hm LGUI D  &hm LSHFT F &kp G         &kp H       &hm RSHFT J &hm RGUI K  &hm RALT L  &hm RCTRL SEMI &kp SQT
-   &kp LSHFT &kp Z       &kp X       &kp C       &kp V       &kp B         &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH       &kp RET
-                                     &kp LGUI    &mo LOWER   &kp SPACE     &kp RET     &mo RAISE   &kp RALT
+   &kp LSHFT &kp Z       &kp X       &kp C       &kp V       &kp B         &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH       &kp ESC
+                                     &kp LGUI    &mo LOWER   &kp RET       &kp SPACE   &mo RAISE   &kp RALT
             >;
         };
 
-        /* * LAYER 1: LOWER (Números e Navegação)
-         */
+        /* * LAYER 1: LOWER (Números e Navegação) */
         lower_layer {
             bindings = <
    &kp ESC    &kp N1      &kp N2      &kp N3      &kp N4      &kp N5        &kp N6      &kp N7      &kp N8      &kp N9      &kp N0         &kp DEL
    &trans     &kp LEFT    &kp DOWN    &kp UP      &kp RIGHT   &trans        &trans      &kp N4      &kp N5      &kp N6      &kp PLUS       &kp MINUS
    &trans     &trans      &trans      &trans      &trans      &trans        &trans      &kp N1      &kp N2      &kp N3      &kp ASTRK      &kp EQUAL
-                                      &trans      &trans      &trans        &kp N0      &trans      &kp DOT
+                                      &trans      &trans      &trans        &trans      &trans      &kp DOT
             >;
         };
 
-        /* * LAYER 2: RAISE (Símbolos Simétricos)
-         * Esquerda: Abertura / Direita: Fechamento
-         */
+        /* * LAYER 2: RAISE (Símbolos Simétricos) */
         raise_layer {
             bindings = <
    &kp GRAVE  &kp EXCL    &kp AT      &kp HASH    &kp LBRC    &kp LPAR      &kp RPAR    &kp RBRC    &kp AMPS    &kp ASTRK   &kp CARET      &kp BSPC
@@ -136,9 +130,7 @@
             >;
         };
 
-        /* * LAYER 3: ADJUST (Sistema)
-         * Acessado segurando os dois polegares (Lower + Raise)
-         */
+        /* * LAYER 3: ADJUST (Sistema) */
         adjust_layer {
             bindings = <
    &bootloader  &sys_reset  &trans      &trans      &trans      &trans        &trans      &trans      &trans      &trans      &sys_reset     &bootloader
