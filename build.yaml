@@ -19,14 +19,14 @@
 #
 ---
 include:
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_left
     artifact-name: corne_test_left
 
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_right
     artifact-name: corne_test_right
 
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: settings_reset
     artifact-name: settings_reset
