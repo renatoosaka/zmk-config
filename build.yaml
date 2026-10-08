@@ -30,3 +30,10 @@ include:
   - board: nice_nano//zmk
     shield: settings_reset
     artifact-name: settings_reset
+
+  # Official ZMK GPIO input test for Pro Micro-compatible controllers.
+  # Use it with the controller alone on a breadboard; it reports the
+  # Arduino/Pro Micro pin number when that pin is connected to GND.
+  - board: nice_nano//zmk
+    shield: tester_pro_micro
+    artifact-name: nicenano_gpio_tester
