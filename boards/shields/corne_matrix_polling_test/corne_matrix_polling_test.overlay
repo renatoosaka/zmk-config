@@ -1,0 +1,11 @@
+/*
+ * This shield keeps the standard Corne matrix intact. It only makes the
+ * out-of-tree shield discoverable and states the normal 10 ms poll interval.
+ */
+
+/ {
+};
+
+&kscan0 {
+    poll-period-ms = <10>;
+};
