@@ -6,7 +6,9 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Pin the ZMK revision used by the successful 2026-10-08 Actions build.
+      # This keeps future firmware builds reproducible while diagnosing hardware.
+      revision: 5b51501fead672c41b5cfb396f3dafe0894bf4e9
       import: app/west.yml
 
   self:
