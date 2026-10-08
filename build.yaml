@@ -23,12 +23,6 @@ include:
     shield: corne_left
     artifact-name: corne_test_left
 
-  # Left-half diagnostic: keep the standard Corne matrix, but scan it by
-  # polling instead of waiting for GPIO row interrupts.
-  - board: nice_nano//zmk
-    shield: "corne_left corne_matrix_polling_test"
-    artifact-name: corne_left_polling_test
-
   - board: nice_nano//zmk
     shield: corne_right
     artifact-name: corne_test_right

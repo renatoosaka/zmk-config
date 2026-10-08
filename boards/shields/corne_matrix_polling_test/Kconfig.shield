@@ -1,2 +1,0 @@
-config SHIELD_CORNE_MATRIX_POLLING_TEST
-    def_bool $(shields_list_contains,corne_matrix_polling_test)
