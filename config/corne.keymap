@@ -1,16 +1,185 @@
+/*
+ * Corne Keymap - ZMK
+ * Configuracao: Symmetrical Dev v4 + Mouse
+ *
+ * Features:
+ * - Home Row Mods (segure para Ctrl/Alt/Cmd/Shift)
+ * - Simbolos simetricos (esquerda abre, direita fecha)
+ * - F-Keys e midia na layer ADJUST
+ * - Combo para Print Screen (Z+X) e gravacao (X+C)
+ * - Thumbs: Space (esquerda), Enter (direita)
+ * - Navegacao na LOWER: Home/End/Page Up/Page Down
+ * - Mouse via LOWER + B; pressione B novamente para sair
+ */
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/pointing.h>
+
+/* Definicoes de layers */
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define ADJ     3
+#define MOUSE   4
 
 / {
+    /* --- 1. COMPORTAMENTOS (Behaviors) --- */
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+    /* --- 2. MACROS --- */
+    macros {
+        print_region: print_region {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+
+            bindings
+                = <&macro_press &kp LGUI &kp LSHFT>
+                , <&macro_tap &kp N4>
+                , <&macro_release &kp LGUI &kp LSHFT>;
+        };
+
+        video_record: video_record {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+
+            bindings
+                = <&macro_press &kp LGUI &kp LSHFT>
+                , <&macro_tap &kp N5>
+                , <&macro_release &kp LGUI &kp LSHFT>;
+        };
+
+        arrow_js: arrow_js {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp EQUAL &kp GT>;
+        };
+    };
+
+    /* --- 3. COMBOS --- */
+    combos {
+        compatible = "zmk,combos";
+
+        combo_print {
+            timeout-ms = <50>;
+            key-positions = <25 26>;
+            bindings = <&print_region>;
+        };
+
+        combo_video {
+            timeout-ms = <50>;
+            key-positions = <26 27>;
+            bindings = <&video_record>;
+        };
+
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <19 20>;
+            bindings = <&kp ESC>;
+        };
+    };
+
+    /* --- 4. CONDITIONAL LAYERS --- */
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        tri_layer {
+            if-layers = <LOWER RAISE>;
+            then-layer = <ADJ>;
+        };
+    };
+
+    /* --- 5. KEYMAP --- */
     keymap {
         compatible = "zmk,keymap";
 
+        /*
+         * LAYER 0: DEFAULT
+         * Thumbs: Space (esquerda) / Enter (direita)
+         */
         default_layer {
             bindings = <
-                &kp Q     &kp W     &kp E     &kp R     &kp T       &kp Y     &kp U     &kp I     &kp O     &kp P
-                &kp A     &kp S     &kp D     &kp F     &kp G       &kp H     &kp J     &kp K     &kp L     &kp SEMI
-                &kp Z     &kp X     &kp C     &kp V     &kp B       &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH
-                                    &kp LCTRL &kp SPACE &kp ENTER   &kp BSPC  &kp SPACE &kp RSHIFT
+&kp TAB    &kp Q        &kp W        &kp E        &kp R        &kp T          &kp Y        &kp U        &kp I        &kp O        &kp P           &kp BSPC
+&kp LCTRL  &hm LCTRL A  &hm LALT S   &hm LGUI D   &hm LSHFT F  &kp G          &kp H        &hm RSHFT J  &hm RGUI K   &hm RALT L   &hm RCTRL SEMI  &kp SQT
+&kp LSHFT  &kp Z        &kp X        &kp C        &kp V        &kp B          &kp N        &kp M        &kp COMMA    &kp DOT      &kp FSLH        &kp ESC
+&kp LGUI   &mo LOWER    &kp SPACE    &kp RET      &mo RAISE    &kp RALT
+            >;
+        };
+
+        /*
+         * LAYER 1: LOWER
+         *
+         * Navegacao:
+         * Q = Home | W = Page Down | E = Page Up | R = End
+         * A = Left | S = Down | D = Up | F = Right
+         *
+         * Mouse:
+         * LOWER + B alterna a layer MOUSE.
+         */
+        lower_layer {
+            bindings = <
+&kp ESC    &kp HOME    &kp PG_DN    &kp PG_UP    &kp END      &trans        &kp N6      &kp N7      &kp N8      &kp N9      &kp N0         &kp DEL
+&trans     &kp LEFT    &kp DOWN     &kp UP       &kp RIGHT    &trans        &trans      &kp N4      &kp N5      &kp N6      &kp PLUS       &kp MINUS
+&trans     &trans      &trans       &trans       &trans       &tog MOUSE    &trans      &kp N1      &kp N2      &kp N3      &kp ASTRK      &kp EQUAL
+&trans     &trans      &trans       &trans       &trans       &kp DOT
+            >;
+        };
+
+        /*
+         * LAYER 2: RAISE
+         * Simbolos
+         */
+        raise_layer {
+            bindings = <
+&kp GRAVE  &kp EXCL    &kp AT      &kp HASH    &kp LBRC    &kp LPAR      &kp RPAR    &kp RBRC    &kp AMPS    &kp ASTRK   &kp CARET      &kp BSPC
+&trans     &kp TILDE   &kp DLLR    &kp PRCNT   &kp LBKT    &kp LT        &kp GT      &kp RBKT    &kp MINUS   &kp EQUAL   &kp PIPE       &kp BSLH
+&trans     &trans      &trans      &arrow_js   &kp UNDER   &kp PLUS      &trans      &trans      &trans      &trans      &trans         &trans
+&trans     &trans      &trans      &trans      &trans      &trans
+            >;
+        };
+
+        /*
+         * LAYER 3: ADJUST
+         * F-Keys + Media + System
+         * Acessada por LOWER + RAISE
+         */
+        adjust_layer {
+            bindings = <
+&kp F1        &kp F2         &kp F3         &kp F4         &kp F5         &kp F6         &kp F7       &kp F8        &kp F9        &kp F10       &kp F11        &kp F12
+&bt BT_CLR    &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &kp C_MUTE   &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP   &kp C_PP
+&bootloader   &sys_reset     &trans         &trans         &trans         &trans         &trans       &trans        &trans        &trans        &sys_reset     &bootloader
+&trans        &trans         &trans         &trans         &trans         &trans
+            >;
+        };
+
+        /*
+         * LAYER 4: MOUSE
+         *
+         * Ativar: LOWER + B
+         * Sair: B
+         *
+         * Movimento: H/J/K/L = esquerda/baixo/cima/direita
+         * Scroll: Y/U/I/O = esquerda/baixo/cima/direita
+         * Cliques: N = esquerdo | M = direito | virgula = central
+         * Navegador: P = voltar | Backspace = avancar
+         */
+        mouse_layer {
+            bindings = <
+&trans    &trans    &trans    &trans    &trans         &trans          &msc SCRL_LEFT    &msc SCRL_DOWN    &msc SCRL_UP    &msc SCRL_RIGHT    &mkp MB4     &mkp MB5
+&trans    &trans    &trans    &trans    &trans         &trans          &mmv MOVE_LEFT    &mmv MOVE_DOWN    &mmv MOVE_UP    &mmv MOVE_RIGHT    &trans       &trans
+&trans    &trans    &trans    &trans    &trans         &tog MOUSE      &mkp LCLK          &mkp RCLK          &mkp MCLK       &trans             &trans       &trans
+&trans    &trans    &trans    &trans    &trans         &trans
             >;
         };
     };
