@@ -1,0 +1,12 @@
+#include <behaviors.dtsi>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        /* The mock kscan never produces an event, so this cannot trigger. */
+        default_layer {
+            bindings = <&sys_reset>;
+        };
+    };
+};

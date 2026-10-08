@@ -1,0 +1,44 @@
+/*
+ * Standalone output-drive diagnostic for the Corne matrix columns.
+ *
+ * The pins below remain at 3.3 V after boot. Use this only with the
+ * controller on a breadboard and a multimeter; it is not Corne firmware.
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+    chosen {
+        zmk,kscan = &matrix_output_test_kscan;
+    };
+
+    /* A no-event kscan lets this diagnostic boot as a normal ZMK image. */
+    matrix_output_test_kscan: matrix_output_test_kscan {
+        compatible = "zmk,kscan-mock";
+        columns = <1>;
+        rows = <0>;
+        events = <>;
+    };
+};
+
+/* D21=P0.31, D20=P0.29, D19=P0.02. */
+&gpio0 {
+    corne_column_outputs_gpio0: corne_column_outputs_gpio0 {
+        gpio-hog;
+        gpios = <31 GPIO_ACTIVE_HIGH>,
+                <29 GPIO_ACTIVE_HIGH>,
+                <2 GPIO_ACTIVE_HIGH>;
+        output-high;
+    };
+};
+
+/* D18=P1.15, D15=P1.13, D14=P1.11. */
+&gpio1 {
+    corne_column_outputs_gpio1: corne_column_outputs_gpio1 {
+        gpio-hog;
+        gpios = <15 GPIO_ACTIVE_HIGH>,
+                <13 GPIO_ACTIVE_HIGH>,
+                <11 GPIO_ACTIVE_HIGH>;
+        output-high;
+    };
+};

@@ -37,3 +37,9 @@ include:
   - board: nice_nano//zmk
     shield: tester_pro_micro
     artifact-name: nicenano_gpio_tester
+
+  # Drives the six Corne matrix column pins high for a multimeter-only
+  # output test with the controller on a breadboard.
+  - board: nice_nano//zmk
+    shield: nicenano_matrix_output_test
+    artifact-name: nicenano_matrix_output_test

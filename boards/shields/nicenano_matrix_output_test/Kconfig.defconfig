@@ -1,0 +1,12 @@
+if SHIELD_NICENANO_MATRIX_OUTPUT_TEST
+
+config ZMK_KEYBOARD_NAME
+    default "GPIO Output Test"
+
+config ZMK_BLE
+    def_bool n
+
+config SETTINGS
+    def_bool n
+
+endif
