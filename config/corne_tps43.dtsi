@@ -16,8 +16,9 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&tps43_split>;
-        // Physical test: up -> left, down -> right, left -> up, right -> down.
-        // Exchange the reported axes without changing their signs.
-        input-processors = <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>;
+        // Physical test after axis swap: horizontal correct, vertical reversed.
+        // Swap first, then invert only the resulting cursor Y axis.
+        input-processors = <&zip_xy_transform
+                            (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)>;
     };
 };
