@@ -13,6 +13,9 @@
         rdy-gpios = <&pro_micro 8 GPIO_ACTIVE_HIGH>;
         reset-gpios = <&pro_micro 9 GPIO_ACTIVE_LOW>;
 
+        // Match the horizontal direction verified on the installed TPS43.
+        flip-x;
+
         one-finger-tap;
         two-finger-tap;
         press-and-hold;
