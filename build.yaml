@@ -19,9 +19,16 @@
 #
 ---
 include:
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_left
-  - board: nice_nano_v2
+    artifact-name: corne_tps43_left
+  - board: nice_nano//zmk
     shield: corne_right
-  - board: nice_nano_v2
+    artifact-name: corne_tps43_right
+  - board: nice_nano//zmk
+    shield: corne_right
+    snippet: tps43-usb-test
+    artifact-name: tps43_usb_test
+  - board: nice_nano//zmk
     shield: settings_reset
+    artifact-name: settings_reset

@@ -1,6 +1,4 @@
 manifest:
-  defaults:
-    revision: v0.3
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
@@ -9,6 +7,11 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
+      # Same ZMK revision used by the working Corne left firmware.
+      revision: 5b51501fead672c41b5cfb396f3dafe0894bf4e9
       import: app/west.yml
+    - name: zmk-driver-azoteq-iqs5xx
+      url: https://github.com/AYM1607/zmk-driver-azoteq-iqs5xx
+      revision: 27321f0232b50f0af31eb27ff97d539933467ea4
   self:
     path: config

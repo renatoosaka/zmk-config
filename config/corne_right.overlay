@@ -1,0 +1,25 @@
+#include "corne_tps43.dtsi"
+
+&pro_micro_i2c {
+    status = "okay";
+    clock-frequency = <100000>;
+
+    tps43: iqs5xx@74 {
+        compatible = "azoteq,iqs5xx";
+        status = "okay";
+        reg = <0x74>;
+
+        // D8 = P1.04; D9 = P1.06. Neither is used by the Corne matrix.
+        rdy-gpios = <&pro_micro 8 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&pro_micro 9 GPIO_ACTIVE_LOW>;
+
+        one-finger-tap;
+        two-finger-tap;
+        press-and-hold;
+        scroll;
+    };
+};
+
+&tps43_split {
+    device = <&tps43>;
+};

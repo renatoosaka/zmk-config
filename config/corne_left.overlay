@@ -1,0 +1,5 @@
+#include "corne_tps43.dtsi"
+
+&tps43_listener {
+    status = "okay";
+};

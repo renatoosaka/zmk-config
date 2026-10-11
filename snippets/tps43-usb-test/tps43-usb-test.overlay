@@ -1,0 +1,8 @@
+&tps43_split {
+    status = "disabled";
+};
+
+&tps43_listener {
+    status = "okay";
+    device = <&tps43>;
+};

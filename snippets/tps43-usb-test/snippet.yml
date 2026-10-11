@@ -1,0 +1,4 @@
+name: tps43-usb-test
+append:
+  EXTRA_CONF_FILE: tps43-usb-test.conf
+  EXTRA_DTC_OVERLAY_FILE: tps43-usb-test.overlay
