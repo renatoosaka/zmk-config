@@ -16,8 +16,9 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&tps43_split>;
-        // Pointer axes are corrected on the right half. This listener only
-        // swaps scroll. Adding a pointer swap here rotates the cursor again.
+        // Physical test with flip-x only: pointer axes match the finger.
+        // A swap plus X invert turned up into right and right into down.
+        // This listener only swaps scroll.
         input-processors = <&zip_scroll_transform INPUT_TRANSFORM_XY_SWAP>;
     };
 };

@@ -1,5 +1,3 @@
-#include <dt-bindings/zmk/input_transform.h>
-
 &tps43_split {
     status = "disabled";
 };
@@ -7,8 +5,4 @@
 &tps43_listener {
     status = "okay";
     device = <&tps43>;
-    // The split node is disabled in this test, so the same pointer
-    // correction has to run on the listener. Scroll swap stays.
-    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>,
-                       <&zip_scroll_transform INPUT_TRANSFORM_XY_SWAP>;
 };
