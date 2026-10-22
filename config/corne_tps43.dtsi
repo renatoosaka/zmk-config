@@ -16,9 +16,8 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&tps43_split>;
-        // Physical test: with flip-x on the trackpad, pointer axes already match.
-        // Up moved the cursor left and right moved it up, so the old swap
-        // plus Y invert is removed. Scroll keeps its own axis swap.
+        // Pointer axes are corrected on the right half. This listener only
+        // swaps scroll. Adding a pointer swap here rotates the cursor again.
         input-processors = <&zip_scroll_transform INPUT_TRANSFORM_XY_SWAP>;
     };
 };

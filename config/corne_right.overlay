@@ -30,4 +30,9 @@
 
 &tps43_split {
     device = <&tps43>;
+    // Runs on this half, before the event crosses the split.
+    // Up/down were coming out as left/right, so swap first and then
+    // invert the resulting X. The left listener must not transform
+    // pointer axes again.
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT)>;
 };
